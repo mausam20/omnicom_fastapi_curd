@@ -42,6 +42,8 @@ df.columns = [
     "destination_name", "destination_type_name", "grade_name", "quantity"
 ]
 
+df["origin_name"] = df["origin_name"].str.lower()
+
 df.to_sql("crude_oil_imports", engine, if_exists="append", index=False)
 
 print(f"Inserted {len(df)} rows into crude_oil_imports table.")
