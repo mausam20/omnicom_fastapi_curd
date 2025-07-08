@@ -5,12 +5,12 @@ class ImportFilterParams(BaseModel):
     country: Optional[str] = Field(None, description="Filter by country of origin")
     skip: int = Field(0, ge=0, description="Records to skip for pagination")
     limit: int = Field(10, gt=0, le=100, description="Number of records to return")
-    
+
     @validator('country', pre=True)
-    def normalize_country(cls, v):
-        if v is None:
-            return v
-        return v.strip().lower()
+    def normalize_country(cls, country):
+        if country is None: # change v
+            return country
+        return country.strip().lower()
 
 class CrudeOilImportCreate(BaseModel):
     year: int
@@ -23,14 +23,14 @@ class CrudeOilImportCreate(BaseModel):
     quantity: float
 
     @validator('origin_name', pre=True)
-    def normalize_origin_name(cls, v):
-        return v.strip().lower()
+    def normalize_origin_name(cls, origin_name):
+        return origin_name.strip().lower()
 
 class BulkCrudeOilImporCreate(BaseModel):
     records: List[CrudeOilImportCreate]
 
 class CrudeOilImportGetRecordByID(BaseModel):
-    id :int = Field(description="Record ID to fetch record")
+    id :int = Field(description="Import ID to fetch record")
 
 class CrudeOilImportUpdate(BaseModel):
     year: Optional[int] = None

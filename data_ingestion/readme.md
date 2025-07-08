@@ -21,6 +21,6 @@ pip install pandas requests
 ```
 
 ## Run Script
-``bash
+```bash
 python .\ingest_data.py --csv_file data1.csv
 ```

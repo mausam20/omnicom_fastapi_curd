@@ -1,4 +1,4 @@
-# 🛢️ Omnicom Crude Oil Import API
+# Omnicom Crude Oil Import API
 
 A FastAPI-based backend service for managing U.S. crude oil import data with PostgreSQL
 ---
@@ -64,6 +64,7 @@ DB_Port=5432
 venv {enviromnet name}
 ./{enviromnet name}/Scripts/activate
 enviromnet name}
+cd src
 uvicorn main:app --reload
 ```
 
