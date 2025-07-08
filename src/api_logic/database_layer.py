@@ -38,7 +38,6 @@ class CrudeOilRepository:
         db.add(new_record)
         db.commit()
         db.refresh(new_record)
-        import pdb;pdb.set_trace()
         return new_record
     
     def insert_bulk_import(self, db:Session, data: BulkCrudeOilImporCreate):
