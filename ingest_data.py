@@ -16,7 +16,6 @@ print(records)
 
 for row in records:
     payload = row
-
     try:
         response = requests.post(API_URL, json=payload)
         if response.status_code == 201:
