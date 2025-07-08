@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from .database_layer import CrudeOilRepository
-from .params_schema import CrudeOilImportCreate, ImportFilterParams, CrudeOilImportUpdate, CrudeOilImportGetRecordByID
+from .params_schema import CrudeOilImportCreate, ImportFilterParams, CrudeOilImportUpdate, CrudeOilImportGetRecordByID, BulkCrudeOilImporCreate
 
 class CrudeOilController:
     def __init__(self):
@@ -13,6 +13,9 @@ class CrudeOilController:
     def create_import(self, db: Session, data: CrudeOilImportCreate):
         return self.repo.insert_import(db, data)
     
+    def bulk_insert(self,db: Session, data: BulkCrudeOilImporCreate):
+        return self.repo.insert_bulk_import(db, data)
+        
     def update_import(self, db: Session, update_id: CrudeOilImportGetRecordByID, data: CrudeOilImportUpdate):
         db_import = self.repo.get_import(db, update_id.id) 
         if db_import:

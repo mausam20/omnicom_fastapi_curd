@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List
 
 class ImportFilterParams(BaseModel):
     country: Optional[str] = Field(None, description="Filter by country of origin")
@@ -15,6 +15,9 @@ class CrudeOilImportCreate(BaseModel):
     destination_type_name: str
     grade_name: str
     quantity: float
+
+class BulkCrudeOilImporCreate(BaseModel):
+    records: List[CrudeOilImportCreate]
 
 class CrudeOilImportGetRecordByID(BaseModel):
     id :int = Field(description="Record ID to fetch record")

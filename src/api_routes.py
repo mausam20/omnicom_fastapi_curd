@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Response
 from sqlalchemy.orm import Session
 from api_logic.controller import CrudeOilController
-from api_logic.params_schema import CrudeOilImportCreate, ImportFilterParams, CrudeOilImportUpdate, CrudeOilImportGetRecordByID
+from api_logic.params_schema import CrudeOilImportCreate, ImportFilterParams, CrudeOilImportUpdate, CrudeOilImportGetRecordByID, BulkCrudeOilImporCreate
 from api_logic.response_schemas import CrudeOilImportResponse
 from database import get_db
 
@@ -18,8 +18,12 @@ def create_import(data: CrudeOilImportCreate, response: Response, db: Session = 
     response.headers["Location"] = f"/imports/{created.id}"
     return created
 
+@router.post("/bulk", status_code=201)
+def bulk_insert(data: BulkCrudeOilImporCreate, db: Session = Depends(get_db)):
+    created = controller.bulk_insert(db, data.records)
+    return created
 
-@router.put("/", response_model=CrudeOilImportUpdate)
+@router.put("/", response_model=CrudeOilImportResponse)
 def update_import(data: CrudeOilImportUpdate,update_id: CrudeOilImportGetRecordByID = Depends(), db: Session = Depends(get_db)):
     data = data.dict(exclude_unset=True) 
     return controller.update_import(db, update_id, data)

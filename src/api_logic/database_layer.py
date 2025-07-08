@@ -1,8 +1,9 @@
 from fastapi import HTTPException
+from typing import List
 from sqlalchemy.orm import Session
 from database import Base
 from sqlalchemy import Column, Integer, String, Float
-from .params_schema import CrudeOilImportCreate
+from .params_schema import CrudeOilImportCreate, BulkCrudeOilImporCreate
 
 class CrudeOilImport(Base):
     __tablename__ = "crude_oil_imports"
@@ -37,7 +38,18 @@ class CrudeOilRepository:
         db.add(new_record)
         db.commit()
         db.refresh(new_record)
+        import pdb;pdb.set_trace()
         return new_record
+    
+    def insert_bulk_import(self, db:Session, data: BulkCrudeOilImporCreate):
+        try:
+            objects = [CrudeOilImport(**item.dict()) for item in data]
+            db.bulk_save_objects(objects)
+            db.commit()
+            return {"message": f"{len(objects)} records inserted successfully."}
+        except Exception as e:
+            db.rollback()
+            raise HTTPException(status_code=500, detail=f"Error inserting records: {str(e)}")
     
     def get_import(self, db: Session, import_id: int):
         return db.query(CrudeOilImport).filter(CrudeOilImport.id == import_id).first()
