@@ -1,4 +1,5 @@
 from fastapi import HTTPException
+from typing import List
 from sqlalchemy.orm import Session
 from .database_layer import CrudeOilRepository
 from .params_schema import CrudeOilImportCreate, ImportFilterParams, CrudeOilImportUpdate, CrudeOilImportGetRecordByID, BulkCrudeOilImporCreate
@@ -13,7 +14,7 @@ class CrudeOilController:
     def create_import(self, db: Session, data: CrudeOilImportCreate):
         return self.repo.insert_import(db, data)
     
-    def bulk_insert(self,db: Session, data: BulkCrudeOilImporCreate):
+    def bulk_insert(self,db: Session, data: List[CrudeOilImportCreate]):
         return self.repo.insert_bulk_import(db, data)
         
     def update_import(self, db: Session, update_id: CrudeOilImportGetRecordByID, data: CrudeOilImportUpdate):
