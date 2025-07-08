@@ -42,6 +42,7 @@ class CrudeOilRepository:
     
     def insert_bulk_import(self, db:Session, data: BulkCrudeOilImporCreate):
         try:
+            data 
             objects = [CrudeOilImport(**item.dict()) for item in data]
             db.bulk_save_objects(objects)
             db.commit()

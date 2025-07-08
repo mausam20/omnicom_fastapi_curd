@@ -1,10 +1,16 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 from typing import Optional, List
 
 class ImportFilterParams(BaseModel):
     country: Optional[str] = Field(None, description="Filter by country of origin")
     skip: int = Field(0, ge=0, description="Records to skip for pagination")
     limit: int = Field(10, gt=0, le=100, description="Number of records to return")
+    
+    @validator('country', pre=True)
+    def normalize_country(cls, v):
+        if v is None:
+            return v
+        return v.strip().lower()
 
 class CrudeOilImportCreate(BaseModel):
     year: int
@@ -15,6 +21,10 @@ class CrudeOilImportCreate(BaseModel):
     destination_type_name: str
     grade_name: str
     quantity: float
+
+    @validator('origin_name', pre=True)
+    def normalize_origin_name(cls, v):
+        return v.strip().lower()
 
 class BulkCrudeOilImporCreate(BaseModel):
     records: List[CrudeOilImportCreate]

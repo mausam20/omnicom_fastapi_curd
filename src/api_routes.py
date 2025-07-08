@@ -9,26 +9,26 @@ router = APIRouter(prefix="/imports", tags=["Crude Oil Imports"])
 controller = CrudeOilController()
 
 @router.get("/", response_model=list[CrudeOilImportResponse])
-def list_imports(params: ImportFilterParams = Depends(), db: Session = Depends(get_db)):
+async def list_imports(params: ImportFilterParams = Depends(), db: Session = Depends(get_db)):
     return controller.get_imports(db, params)
 
 @router.post("/", response_model=CrudeOilImportResponse, status_code=201)
-def create_import(data: CrudeOilImportCreate, response: Response, db: Session = Depends(get_db)):
+async def create_import(data: CrudeOilImportCreate, response: Response, db: Session = Depends(get_db)):
     created = controller.create_import(db, data)
     response.headers["Location"] = f"/imports/{created.id}"
     return created
 
 @router.post("/bulk", status_code=201)
-def bulk_insert(data: BulkCrudeOilImporCreate, db: Session = Depends(get_db)):
+async def bulk_insert(data: BulkCrudeOilImporCreate, db: Session = Depends(get_db)):
     created = controller.bulk_insert(db, data.records)
     return created
 
 @router.put("/", response_model=CrudeOilImportResponse)
-def update_import(data: CrudeOilImportUpdate,update_id: CrudeOilImportGetRecordByID = Depends(), db: Session = Depends(get_db)):
+async def update_import(data: CrudeOilImportUpdate,update_id: CrudeOilImportGetRecordByID = Depends(), db: Session = Depends(get_db)):
     data = data.dict(exclude_unset=True) 
     return controller.update_import(db, update_id, data)
 
 @router.delete("/")
-def delete_import(update_id: CrudeOilImportGetRecordByID = Depends(), db: Session = Depends(get_db)):
+async def delete_import(update_id: CrudeOilImportGetRecordByID = Depends(), db: Session = Depends(get_db)):
     controller.delete_import(db, update_id)
     return {"id": update_id.id, "detail": "Deleted"}
