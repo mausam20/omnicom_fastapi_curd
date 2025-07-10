@@ -20,16 +20,19 @@ omnicom_fastapi_curd/
   ├── main.py  
   ├── api_routes.py  
   ├── config.json  
-  ├── database.py  
-  ├── test/  
+  ├── database.py    
   └── api_logic/  
    ├── controller.py  
    ├── database_layer.py  
    ├── params_schema.py  
    └── response_schemas.py  
- ├── readme.md  
- ├── requirments.txt  
- ├── ingest_data.py  
+  ├── readme.md  
+  ├── requirments.txt  
+  ├── data_ingestion # scripts to ingest data from csv to the database
+    ├── ingest_data_pd.py  # read data from csv and ingest to postgres
+    ├── inget_data.py # read data from csv and call the FastAPI post API to ingest the data
+    ├── readme.md  
+
 ```
 
 ---
