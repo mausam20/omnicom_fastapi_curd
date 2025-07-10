@@ -27,13 +27,13 @@ class CrudeOilRepository:
         return query.offset(skip).limit(limit).all()
 
     def insert_import(self, db: Session, data: CrudeOilImportCreate):
-        existing = db.query(CrudeOilImport).filter(
-            CrudeOilImport.year == data.year,
-            CrudeOilImport.month == data.month,
-            CrudeOilImport.origin_name == data.origin_name
-        ).first()
-        if existing:
-            raise HTTPException(status_code=409, detail="Duplicate import entry detected.")
+        # existing = db.query(CrudeOilImport).filter(
+        #     CrudeOilImport.year == data.year,
+        #     CrudeOilImport.month == data.month,
+        #     CrudeOilImport.origin_name == data.origin_name
+        # ).first()
+        # if existing:
+        #     raise HTTPException(status_code=409, detail="Duplicate import entry detected.")
         new_record = CrudeOilImport(**data.dict())
         db.add(new_record)
         db.commit()
