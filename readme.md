@@ -17,7 +17,8 @@ A FastAPI-based backend service for managing U.S. crude oil import data with Pos
 ```
 omnicom_fastapi_curd/  
  ├── src/  
-  ├── main.py  
+  ├── main.py 
+  ├── test.py 
   ├── api_routes.py  
   ├── config.json  
   ├── database.py    
@@ -26,12 +27,13 @@ omnicom_fastapi_curd/
    ├── database_layer.py  
    ├── params_schema.py  
    └── response_schemas.py  
-  ├── readme.md  
-  ├── requirments.txt  
-  ├── data_ingestion # scripts to ingest data from csv to the database
-    ├── ingest_data_pd.py  # read data from csv and ingest to postgres
-    ├── inget_data.py # read data from csv and call the FastAPI post API to ingest the data
-    ├── readme.md  
+ ├── readme.md  
+ ├── readme.md 
+ ├── requirments.txt  
+ ├── data_ingestion # scripts to ingest data from csv to the database
+   ├── ingest_data_pd.py  # read data from csv and ingest to postgres
+   ├── inget_data.py # read data from csv and call the FastAPI post API to ingest the data
+   └── readme.md  
 
 ```
 
@@ -78,7 +80,7 @@ uvicorn main:app --reload
   
 
 - For In-depth understating of the APIs go to http://localhost:8000/redoc, it gives more clean, readable API reference
-- ![redocs Image](imgs/Screenshot%202025-07-07%20203337.png)
+![redocs Image](imgs/Screenshot%202025-07-07%20203337.png)
 
 ---
 
